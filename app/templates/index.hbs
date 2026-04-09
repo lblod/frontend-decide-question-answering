@@ -1,0 +1,54 @@
+{{page-title "DECIDe | Smart Search"}}
+<AuBodyContainer>
+  <section
+    class="au-u-flex au-u-flex--center au-u-height-full "
+  >
+    <article
+      class="au-u-1-1 au-u-flex au-u-flex--column au-u-flex--center au-u-flex--vertical-center"
+    >
+      <div
+        class="au-u-flex au-u-flex--column au-u-flex--center au-u-padding au-u-max-width-small au-u-height-full au-o-flow au-o-flow--small"
+      >
+        <div class="au-u-text-center">
+          <img class="au-u-1-5@small" src="/assets/images/DECIDe-logo.png" alt="DECIDe Smart Search logo" />
+        </div>
+        <AuHeading class="au-u-text-center" @level="1" @skin="1">DECIDe Smart Search</AuHeading>
+
+        <AuHeading class="au-u-text-center" @level="2" @skin="4">Need help understanding local decisions? This Smart Search is here to answer questions about decisions made by your Local Authority.</AuHeading>
+
+        <AuHeading class="au-u-regular au-u-text-center" @level="3" @skin="5">Asking a question in the language of the decision will sometimes give you a better answer.</AuHeading>
+        <div class="au-o-flow au-o-flow--small">
+          <AuHeading @level="2" @skin="4">Choose a local authority</AuHeading>
+          <SelectLocalAuthority
+            @localAuthorityData={{this.localAuthorityData}}
+            @onChange={{this.changeSelectLocalAuthority}}
+          />
+        </div>
+
+        <div class="au-o-flow au-o-flow--small">
+          <AuHeading @level="2" @skin="4">Ask a question</AuHeading>
+          <AuTextarea
+            id="question-text-area"
+            @width="block"
+            style="height: 10rem"
+            @value={{this.question}}
+            {{on "input" this.setQuestion}}
+          />
+        </div>
+
+        <AuButton
+          @disabled={{not (and this.question this.localAuthorityData.selectedLocalAuthority)}}
+          @loading={{this.loading}}
+          @loadingMessage="Laden..."
+          @width="block"
+          {{on "click" this.submitLocalAuthority}}
+        >
+          Send
+        </AuButton>
+      </div>
+      <p class="au-u-text-center au-u-margin-bottom">
+        <AuLink @route="gdpr">&#9432; Find out more about the project and how we collect your data</AuLink>
+      </p>
+    </article>
+  </section>
+</AuBodyContainer>
