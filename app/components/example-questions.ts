@@ -1,5 +1,6 @@
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
 import Component from '@glimmer/component';
 
 export default class ExampleQuestions extends Component {
@@ -36,5 +37,10 @@ export default class ExampleQuestions extends Component {
 
   clearQuestion = () => {
     this.selectedQuestion = "";
+  }
+
+  @action
+  questionClicked(exampleQuestion) {
+    this.args.onQuestionClicked(exampleQuestion);
   }
 }

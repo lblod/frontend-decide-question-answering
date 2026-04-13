@@ -6,7 +6,7 @@
     </div>
     <AuButtonGroup class="au-u-flex--column">
       {{#each this.currentExampleQuestions as |exampleQuestion|}}
-        <AuButton @skin="secondary" @width="block">{{exampleQuestion}}</AuButton>
+        <AuButton @skin="secondary" @width="block" {{on "click" (fn this.questionClicked exampleQuestion)}}>{{exampleQuestion}}</AuButton>
       {{/each}}
     </AuButtonGroup>
   </div>

@@ -1,0 +1,26 @@
+<section
+  class="au-u-flex au-u-flex--column au-u-height-full "
+>
+  <div class="au-u-flex au-u-flex--vertical-center au-u-flex-grow-0 au-u-flex-shrink-0">
+    <img style="max-height: 7rem" src="/assets/images/DECIDe-logo.png" alt="DECIDe Smart Search logo" />
+    <AuHeading class="au-u-text-center" @level="1" @skin="1">DECIDe Smart Search</AuHeading>
+  </div>
+  <div class="au-u-flex au-u-flex--column au-u-2-3 au-u-flex-grow au-u-flex-shrink" style="margin: 0 auto;">
+    <div class="au-u-flex-self-start au-u-2-3 au-u-margin-top-small">
+      <AuHeading @level="2" @skin="4">You're asking a question about {{ this.capitalizedLocalAuthority}}</AuHeading>
+    </div>
+    <div class="au-u-flex-self-end au-u-2-3 au-u-margin-top-small au-u-padding-small au-u-background-gray-100" style="border-radius: 6px;">
+      {{this.questionAnswering.current}}
+    </div>
+    <div class="au-u-flex-self-end au-u-2-3 au-u-text-right" style="color: var(--au-gray-400)">{{this.formattedStartTime}}</div>
+    <AuLoader
+      class="au-u-flex-self-start au-u-2-3 au-u-margin-top-small au-u-text-left"
+      @inline={{this.inline}}
+      @hideMessage={{this.hideMessage}}
+      @centered={{this.centered}}
+    ></AuLoader>
+  </div>
+  <div class="au-u-text-center au-u-margin-bottom au-u-flex-grow-0 au-u-flex-shrink-0">
+    <AuLink @route="gdpr">&#9432; Find out more about the project and how we collect your data</AuLink>
+  </div>
+</section>

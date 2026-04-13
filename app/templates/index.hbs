@@ -10,7 +10,7 @@
         class="au-u-flex au-u-flex--column au-u-flex--center au-u-padding au-u-max-width-small au-u-height-full au-o-flow au-o-flow--small"
       >
         <div class="au-u-text-center">
-          <img class="au-u-1-5@small" src="/assets/images/DECIDe-logo.png" alt="DECIDe Smart Search logo" />
+          <img style="max-height: 15rem" src="/assets/images/DECIDe-logo.png" alt="DECIDe Smart Search logo" />
         </div>
         <AuHeading class="au-u-text-center" @level="1" @skin="1">DECIDe Smart Search</AuHeading>
 
@@ -43,11 +43,11 @@
           @width="block"
           @icon="arrow-right"
           @iconAlignment="right"
-          {{on "click" this.submitLocalAuthority}}
+          {{on "click" this.sendQuestion}}
         >
           Send
         </AuButton>
-        <ExampleQuestions />
+        <ExampleQuestions @onQuestionClicked={{this.sendQuestion}} />
       </div>
       <p class="au-u-text-center au-u-margin-bottom">
         <AuLink @route="gdpr">&#9432; Find out more about the project and how we collect your data</AuLink>

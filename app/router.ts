@@ -8,7 +8,7 @@ export default class Router extends EmberRouter {
 
 Router.map(function () {
   this.route('index', { path: '/' });
-
+  this.route('answer');
   this.route('gdpr');
   this.route('route-not-found', {
     path: '/*wildcard',

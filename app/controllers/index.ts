@@ -18,6 +18,7 @@ export default class IndexController extends Controller {
   @tracked localAuthority?: string = '';
   @service declare router: RouterService;
   @service declare localAuthorityData: LocalAuthorityDataService;
+  @service declare questionAnswering: QuestionAnsweringService;
   @tracked question?: string = '';
 
   @action
@@ -26,14 +27,20 @@ export default class IndexController extends Controller {
     this.localAuthority = this.localAuthorityData.selectedLocalAuthority.id;
   }
 
-  @action submitLocalAuthority() {
-    this.localAuthority = this.localAuthorityData.selectedLocalAuthority?.id;
+  @action sendQuestion(question) {
+    if (typeof question === "string") {
+      this.question = question;
+    }
     if (this.localAuthorityData.selectedLocalAuthority) {
-      this.router.transitionTo('index', {
+      this.localAuthority = this.localAuthorityData.selectedLocalAuthority?.id;
+      this.questionAnswering.current = this.question;
+      this.router.transitionTo('answer', {
         queryParams: {
           localAuthority: this.localAuthorityData.selectedLocalAuthority.id,
         },
       });
+    } else {
+      alert('Please select a local authority first');
     }
   }
 
@@ -41,4 +48,5 @@ export default class IndexController extends Controller {
   setQuestion(e: InputEvent) {
     this.question = e.target.value;
   }
+
 }
