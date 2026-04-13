@@ -1,0 +1,23 @@
+{{#if this.selectedQuestion}}
+  <div class="au-u-margin-top-small au-u-padding-small" style="border: 0.1rem solid var(--au-gray-300); border-radius: 6px;">
+    <div class="au-u-flex au-u-flex--row au-u-flex--between au-u-flex--vertical-center">
+      <AuHeading @skin="4">{{this.selectedQuestion}}</AuHeading>
+      <AuButton @skin="naked" @icon="circle-x" @hideText={{true}} {{on "click" this.clearQuestion}}>Close</AuButton>
+    </div>
+    <AuButtonGroup class="au-u-flex--column">
+      {{#each this.currentExampleQuestions as |exampleQuestion|}}
+        <AuButton @skin="secondary" @width="block">{{exampleQuestion}}</AuButton>
+      {{/each}}
+    </AuButtonGroup>
+  </div>
+{{else}}
+<AuToolbar @border="top" @size="small" class="au-u-text-center au-u-margin-top-small" as |Group|>
+   <AuButtonGroup class="au-u-text-center" style="margin: auto">
+     {{#each this.questions as |question|}}
+       <AuButton @skin="secondary" {{on "click" (fn this.selectQuestion question)}}>
+         {{question}}
+       </AuButton>
+     {{/each}}
+   </AuButtonGroup>
+ </AuToolbar>
+{{/if}}

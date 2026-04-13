@@ -41,10 +41,13 @@
           @loading={{this.loading}}
           @loadingMessage="Laden..."
           @width="block"
+          @icon="arrow-right"
+          @iconAlignment="right"
           {{on "click" this.submitLocalAuthority}}
         >
           Send
         </AuButton>
+        <ExampleQuestions />
       </div>
       <p class="au-u-text-center au-u-margin-bottom">
         <AuLink @route="gdpr">&#9432; Find out more about the project and how we collect your data</AuLink>
