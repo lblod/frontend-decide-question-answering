@@ -19,29 +19,20 @@ export default class IndexController extends Controller {
   @service declare router: RouterService;
   @service declare localAuthorityData: LocalAuthorityDataService;
   @service declare questionAnswering: QuestionAnsweringService;
-  @tracked private _question?: string;
 
-  get question(): string {
-    return this._question ?? this.questionAnswering.current ?? '';
-  }
-
-  set question(value: string) {
-    this._question = value;
-  }
-  
   @action
   changeSelectLocalAuthority(selected: LocalGovernmentOption) {
     this.localAuthorityData.selectedLocalAuthority = selected;
     this.localAuthority = this.localAuthorityData.selectedLocalAuthority.id;
   }
 
-  @action sendQuestion(question) {
+  @action sendQuestion(question: string) {
     if (typeof question === "string") {
-      this.question = question;
+      this.questionAnswering.currentQuestion = question;
     }
     if (this.localAuthorityData.selectedLocalAuthority) {
       this.localAuthority = this.localAuthorityData.selectedLocalAuthority?.id;
-      this.questionAnswering.current = this.question;
+      this.questionAnswering.currentQuestion = this.questionAnswering.currentQuestion;
       this.router.transitionTo('answer', {
         queryParams: {
           localAuthority: this.localAuthorityData.selectedLocalAuthority.id,
@@ -54,7 +45,7 @@ export default class IndexController extends Controller {
 
   @action
   setQuestion(e: InputEvent) {
-    this.question = e.target.value;
+    this.questionAnswering.currentQuestion = e.target.value;
   }
 
 }

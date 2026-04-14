@@ -14,4 +14,8 @@ export default class AnswerRoute extends Route {
       startTime: new Date()
     };
   }
+  setupController(controller: AnswerController, model: unknown, transition: Transition): void {
+    super.setupController(controller, model, transition);
+    controller.sendQuestion();
+  }
 }

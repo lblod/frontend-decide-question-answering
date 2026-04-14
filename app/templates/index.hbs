@@ -31,13 +31,13 @@
             id="question-text-area"
             @width="block"
             style="height: 10rem"
-            value={{this.question}}
+            value={{this.questionAnswering.currentQuestion}}
             {{on "input" this.setQuestion}}
           />
         </div>
 
         <AuButton
-          @disabled={{not (and this.question this.localAuthorityData.selectedLocalAuthority)}}
+          @disabled={{not (and this.questionAnswering.currentQuestion this.localAuthorityData.selectedLocalAuthority)}}
           @loading={{this.loading}}
           @loadingMessage="Laden..."
           @width="block"
