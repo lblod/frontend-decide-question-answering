@@ -1,6 +1,8 @@
 # frontend-decide-question-answering
 
-The Policy Impact Report is an interactive report that visualises aggregated insights on how a city’s LD&L relate to one or more policy frameworks.
+The Smart Search is a small application that communicates with the RAG/LLM backend of the DECIDe project.
+
+As a user, you select a local authority, and ask an open question by entering it in the text area, or select an example question using the buttons below the Send button.
 
 ## Prerequisites
 
