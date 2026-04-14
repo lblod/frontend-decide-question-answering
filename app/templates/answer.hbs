@@ -58,10 +58,10 @@
         <AuToolbar @size="small">
           <AuButtonGroup class="au-u-text-center" style="margin: auto">
             <AuButton @skin="naked" {{on "click" this.approve}}>
-              <VoteThumbsUpIcon @fill={{if this.approved "#0055CC"}} />
+              <VoteThumbsUpIcon @fill={{if this.questionAnswering.answer.approved "#0055CC"}} />
             </AuButton>
             <AuButton @skin="naked" {{on "click" this.reject}}>
-              <VoteThumbsDownIcon @fill={{if this.rejected "#0055CC"}} />
+              <VoteThumbsDownIcon @fill={{if this.questionAnswering.answer.rejected "#0055CC"}} />
             </AuButton>
           </AuButtonGroup>
         </AuToolbar>

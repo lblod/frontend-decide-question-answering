@@ -13,9 +13,6 @@ export default class AnswerController extends Controller {
 
   @tracked localAuthority: string | null = null;
 
-  @tracked approved = false;
-  @tracked rejected = false;
-
   get capitalizedLocalAuthority(): string {
     if (!this.localAuthority) return '';
     return this.localAuthority?.charAt(0).toUpperCase() + this.localAuthority?.slice(1);
@@ -37,13 +34,19 @@ export default class AnswerController extends Controller {
 
   // TODO: these actions should be sent to the backend
   @action approve() {
-    this.rejected = false;
-    this.approved = !this.approved;
+    this.questionAnswering.answer = {
+      ...this.questionAnswering.answer!,
+      rejected: false,
+      approved: !this.questionAnswering.answer.approved
+    };
   }
 
   @action reject() {
-    this.approved = false;
-    this.rejected = !this.rejected;
+    this.questionAnswering.answer = {
+      ...this.questionAnswering.answer!,
+      approved: false,
+      rejected: !this.questionAnswering.answer.rejected
+    };
   }
 
   @action approveSource(index: number) {
