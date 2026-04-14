@@ -19,8 +19,16 @@ export default class IndexController extends Controller {
   @service declare router: RouterService;
   @service declare localAuthorityData: LocalAuthorityDataService;
   @service declare questionAnswering: QuestionAnsweringService;
-  @tracked question?: string = '';
+  @tracked private _question?: string;
 
+  get question(): string {
+    return this._question ?? this.questionAnswering.current ?? '';
+  }
+
+  set question(value: string) {
+    this._question = value;
+  }
+  
   @action
   changeSelectLocalAuthority(selected: LocalGovernmentOption) {
     this.localAuthorityData.selectedLocalAuthority = selected;
