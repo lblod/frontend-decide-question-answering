@@ -10,7 +10,7 @@
         class="au-u-flex au-u-flex--column au-u-flex--center au-u-padding au-u-max-width-small au-u-height-full au-o-flow au-o-flow--small"
       >
         <div class="au-u-text-center">
-          <img style="max-height: 15rem" src="/assets/images/DECIDe-logo.png" alt="DECIDe Smart Search logo" />
+          <img style="max-height: 15rem" src="/assets/images/DECIDe-logo.png" alt="DECIDe Smart Search" />
         </div>
         <AuHeading class="au-u-text-center" @level="1" @skin="1">DECIDe Smart Search</AuHeading>
 
@@ -43,7 +43,7 @@
           @width="block"
           @icon="arrow-right"
           @iconAlignment="right"
-          {{on "click" this.sendQuestion}}
+          {{on "click" (fn this.sendQuestion this.questionAnswering.currentQuestion)}}
         >
           Send
         </AuButton>

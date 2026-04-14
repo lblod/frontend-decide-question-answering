@@ -2,23 +2,71 @@
   class="au-u-flex au-u-flex--column au-u-height-full "
 >
   <div class="au-u-flex au-u-flex--vertical-center au-u-flex-grow-0 au-u-flex-shrink-0">
-    <img style="max-height: 7rem" src="/assets/images/DECIDe-logo.png" alt="DECIDe Smart Search logo" />
+    <img style="max-height: 7rem" src="/assets/images/DECIDe-logo.png" alt="DECIDe Smart Search" />
     <AuHeading class="au-u-text-center" @level="1" @skin="1">DECIDe Smart Search</AuHeading>
   </div>
-  <div class="au-u-flex au-u-flex--column au-u-2-3 au-u-flex-grow au-u-flex-shrink" style="margin: 0 auto;">
-    <div class="au-u-flex-self-start au-u-2-3 au-u-margin-top-small">
+  <div class="au-u-flex au-u-flex--column au-u-3-4 au-u-flex-grow au-u-flex-shrink" style="margin: 0 auto;">
+    <div class="au-u-flex-self-start au-u-3-4 au-u-margin-top-small">
       <AuHeading @level="2" @skin="4">You're asking a question about {{ this.capitalizedLocalAuthority}}</AuHeading>
     </div>
-    <div class="au-u-flex-self-end au-u-2-3 au-u-margin-top-small au-u-padding-small au-u-background-gray-100" style="border-radius: 6px;">
+    <div class="au-u-flex-self-end au-u-3-4 au-u-margin-top-small au-u-padding-small au-u-background-gray-100" style="border-radius: 6px;">
       {{this.questionAnswering.currentQuestion}}
     </div>
-    <div class="au-u-flex-self-end au-u-2-3 au-u-text-right" style="color: var(--au-gray-400)">{{format-time this.model.startTime}}</div>
+    <div class="au-u-flex-self-end au-u-3-4 au-u-text-right" style="color: var(--au-gray-400)">{{format-time this.model.startTime}}</div>
     {{#if this.questionAnswering.answer}}
-      <div class="au-u-flex-self-start au-u-2-3 au-u-margin-top-small au-u-padding-small" style="border: 0.1rem solid var(--au-gray-300); border-radius: 6px;">
-        {{this.questionAnswering.answer.content}}
+      <div class="au-u-flex-self-start au-u-3-4 au-u-margin-top-small au-u-padding-small" style="border: 0.1rem solid var(--au-gray-300); border-radius: 6px;">
+        <div>
+          {{this.questionAnswering.answer.content}}
+        </div>
+        {{#if this.questionAnswering.answer.sources.length}}
+          <div class="au-u-margin-top-small">
+            <AuHeading @level="3" @skin="5" class="au-u-flex au-u-flex--vertical-center au-u-margin-bottom-small">
+              <img src="/assets/images/icon-circle-check.svg" alt="Sources" /><span class="au-u-margin-left-tiny">Sources</span>
+            </AuHeading>
+            <AuList as |Item|>
+              {{#each this.questionAnswering.answer.sources as |source index|}}
+                <Item class="au-u-flex au-u-1-1">
+                  <AuLinkExternal
+                    class="au-u-flex-grow"
+                    href={{source.href}}
+                    @icon="link-external"
+                    @iconAlignment="right"
+                  >
+                    {{source.title}}
+                  </AuLinkExternal>
+                  <div class="au-u-flex">
+                    <AuButtonGroup>
+                      <AuButton @skin="naked" {{on "click" (fn this.approveSource index)}}>
+                        <VoteThumbsUpIcon @fill={{if source.approved "#0055CC"}} />
+                      </AuButton>
+                      <AuButton @skin="naked" {{on "click" (fn this.rejectSource index)}}>
+                        <VoteThumbsDownIcon @fill={{if source.rejected "#0055CC"}} />
+                      </AuButton>
+                    </AuButtonGroup>
+                  </div>
+                </Item>
+              {{/each}}
+            </AuList>
+          </div>
+        {{/if}}
       </div>
-      <div class="au-u-flex-self-start au-u-2-3 au-u-text-right" style="color: var(--au-gray-400)">{{format-time this.questionAnswering.answer.time}}</div>
-      <AuToolbar @size="small" class="au-u-text-center au-u-margin-top-small" as |Group|>
+      <div class="au-u-flex-self-start au-u-3-4 au-u-text-right" style="color: var(--au-gray-400)">
+          {{format-time this.questionAnswering.answer.time}}
+      </div>
+      <div class="au-u-text-center au-u-margin-top-large">
+        <AuHeading @level="2" @skin="4">Did this answer your question?</AuHeading>
+        <AuToolbar @size="small">
+          <AuButtonGroup class="au-u-text-center" style="margin: auto">
+            <AuButton @skin="naked" {{on "click" this.approve}}>
+              <VoteThumbsUpIcon @fill={{if this.approved "#0055CC"}} />
+            </AuButton>
+            <AuButton @skin="naked" {{on "click" this.reject}}>
+              <VoteThumbsDownIcon @fill={{if this.rejected "#0055CC"}} />
+            </AuButton>
+          </AuButtonGroup>
+        </AuToolbar>
+      </div>
+      <AuToolbar @size="small" class="au-u-text-center au-u-margin-top-small">
          <AuButtonGroup class="au-u-text-center" style="margin: auto">
            <AuButton
              @skin="secondary" @icon="arrow-right" @iconAlignment="right"
@@ -36,7 +84,7 @@
        </AuToolbar>
     {{else}}
       <AuLoader
-        class="au-u-flex-self-start au-u-2-3 au-u-margin-top-small au-u-text-left"
+        class="au-u-flex-self-start au-u-3-4 au-u-margin-top-small au-u-text-left"
         @inline={{this.inline}}
         @hideMessage={{this.hideMessage}}
         @centered={{this.centered}}

@@ -11,7 +11,7 @@
     </AuButtonGroup>
   </div>
 {{else}}
-<AuToolbar @border="top" @size="small" class="au-u-text-center au-u-margin-top-small" as |Group|>
+<AuToolbar @border="top" @size="small" class="au-u-text-center au-u-margin-top-small">
    <AuButtonGroup class="au-u-text-center" style="margin: auto">
      {{#each this.questions as |question|}}
        <AuButton @skin="secondary" {{on "click" (fn this.selectQuestion question)}}>

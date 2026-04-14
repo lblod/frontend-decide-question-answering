@@ -1,9 +1,12 @@
-import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import Component from '@glimmer/component';
 
-export default class ExampleQuestions extends Component {
+interface ExampleQuestionsArgs {
+  onQuestionClicked: (question: string) => void;
+}
+
+export default class ExampleQuestions extends Component<ExampleQuestionsArgs> {
   @tracked selectedQuestion: string = "";
   exampleQuestions: Record<string, string[]> = {
     "Ask about subsidies": [
@@ -31,7 +34,7 @@ export default class ExampleQuestions extends Component {
     return this.exampleQuestions[this.selectedQuestion] ?? [];
   }
 
-  selectQuestion = (question) => {
+  selectQuestion = (question: string) => {
     this.selectedQuestion = question;
   }
 
@@ -40,7 +43,7 @@ export default class ExampleQuestions extends Component {
   }
 
   @action
-  questionClicked(exampleQuestion) {
+  questionClicked(exampleQuestion: string) {
     this.args.onQuestionClicked(exampleQuestion);
   }
 }
