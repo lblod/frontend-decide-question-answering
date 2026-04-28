@@ -1,6 +1,5 @@
 import Service from '@ember/service';
 import { tracked } from '@glimmer/tracking';
-import fetch from 'fetch';
 
 export interface Source {
   uri: string;
@@ -38,7 +37,7 @@ export default class QuestionAnsweringService extends Service {
     );
     let content: string = "";
     let sources = [];
-    let id = '0';
+    let id;
     if (!resp.ok) {
       content = "Unfortunately, our service encountered an error. Please try again later."
     } else {
