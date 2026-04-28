@@ -21,9 +21,17 @@ You will need the following things properly installed on your computer.
 
 ## Running / Development
 
-- `ember serve`
+To run in combination with the full `app-decide` backend, add this to your `docker-compose.override.yml`:
+
+```
+services:
+  frontend-smart-search:
+    entrypoint: "echo 'service disabled'"
+    restart: "no"
+```
+Then run `npm run dev` or `ember serve --proxy=http://localhost:80`.
+
 - Visit your app at [http://localhost:4200](http://localhost:4200).
-- Visit your tests at [http://localhost:4200/tests](http://localhost:4200/tests).
 
 ### Code Generators
 
@@ -43,15 +51,3 @@ Make use of the many generators for code, try `ember help generate` for more det
 
 - `ember build` (development)
 - `ember build --environment production` (production)
-
-### Deploying
-
-Specify what it takes to deploy your app.
-
-## Further Reading / Useful Links
-
-- [ember.js](https://emberjs.com/)
-- [ember-cli](https://cli.emberjs.com/release/)
-- Development Browser Extensions
-  - [ember inspector for chrome](https://chrome.google.com/webstore/detail/ember-inspector/bmdblncegkenkacieihfhpjfppoconhi)
-  - [ember inspector for firefox](https://addons.mozilla.org/en-US/firefox/addon/ember-inspector/)

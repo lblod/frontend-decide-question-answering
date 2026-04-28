@@ -1,0 +1,17 @@
+export default [
+  {
+    ignores: [
+      // unconventional js
+      "blueprints/*/files/",
+
+      // compiled output
+      "dist/",
+
+      // misc
+      "coverage/",
+
+      // ember-try
+      ".node_modules.ember-try/",
+    ],
+  },
+];
