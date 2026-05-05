@@ -20,7 +20,7 @@ export default class AnswerController extends Controller {
 
   @action
   async sendQuestion() {
-    await this.questionAnswering.sendQuestion();
+    await this.questionAnswering.sendQuestion(this.localAuthority);
   }
 
   @action navigateBack(clearQuestion: boolean) {
@@ -37,7 +37,7 @@ export default class AnswerController extends Controller {
     this.questionAnswering.answer = {
       ...this.questionAnswering.answer!,
       rejected: false,
-      approved: !this.questionAnswering.answer.approved
+      approved: !this.questionAnswering.answer?.approved
     };
   }
 
@@ -45,7 +45,7 @@ export default class AnswerController extends Controller {
     this.questionAnswering.answer = {
       ...this.questionAnswering.answer!,
       approved: false,
-      rejected: !this.questionAnswering.answer.rejected
+      rejected: !this.questionAnswering.answer?.rejected
     };
   }
 

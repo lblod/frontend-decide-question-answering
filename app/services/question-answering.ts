@@ -21,7 +21,7 @@ export default class QuestionAnsweringService extends Service {
   @tracked currentQuestion: string = "";
   @tracked answer?: Answer;
 
-  async sendQuestion() {
+  async sendQuestion(localAuthority: string | null) {
     const resp = await fetch(
       "/question-answering/answer",
       {
@@ -31,7 +31,8 @@ export default class QuestionAnsweringService extends Service {
         method: 'POST',
         body: JSON.stringify({
           "question": this.currentQuestion,
-          "top_n": 3
+          "top_n": 3,
+          localAuthority
         }),
       }
     );
