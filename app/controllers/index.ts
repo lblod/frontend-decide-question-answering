@@ -15,15 +15,14 @@ export interface LocalGovernmentOption {
 export default class IndexController extends Controller {
   queryParams = ['localAuthority'];
 
-  @tracked localAuthority: string = '';
+  @tracked localAuthority: string | undefined = '';
   @service declare router: RouterService;
   @service declare localAuthorityData: LocalAuthorityDataService;
   @service declare questionAnswering: QuestionAnsweringService;
 
   @action
   changeSelectLocalAuthority(selected: LocalGovernmentOption) {
-    this.localAuthorityData.selectedLocalAuthority = selected;
-    this.localAuthority = this.localAuthorityData.selectedLocalAuthority.id!;
+    this.localAuthority = selected.id;
   }
 
   @action sendQuestion(question: string) {

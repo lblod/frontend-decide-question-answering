@@ -1,5 +1,7 @@
 import Service from '@ember/service';
 import { tracked } from '@glimmer/tracking';
+import { service } from '@ember/service';
+import type LocalAuthorityDataService from 'frontend-decide-question-answering/services/local-authority-data';
 
 export interface Source {
   uri: string;
@@ -20,46 +22,53 @@ export interface Answer {
 export default class QuestionAnsweringService extends Service {
   @tracked currentQuestion: string = "";
   @tracked answer?: Answer;
+  @service declare localAuthorityData: LocalAuthorityDataService;
 
-  async sendQuestion(localAuthority: string | null) {
-    const resp = await fetch(
-      "/question-answering/answer",
-      {
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        method: 'POST',
-        body: JSON.stringify({
-          "question": this.currentQuestion,
-          "top_n": 3,
-          localAuthority
-        }),
+  async sendQuestion() {
+    let localAuthority = null;
+    if (this.localAuthorityData.selectedLocalAuthority) {
+      localAuthority = this.localAuthorityData.selectedLocalAuthority.uri!;
+      const resp = await fetch(
+        "/question-answering/answer",
+        {
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          method: 'POST',
+          body: JSON.stringify({
+            "question": this.currentQuestion,
+            "top_n": 3,
+            localAuthority
+          }),
+        }
+      );
+      let content: string = "";
+      let sources = [];
+      let id;
+      if (!resp.ok) {
+        content = "Unfortunately, our service encountered an error. Please try again later."
+      } else {
+        const payload = await resp.json();
+        if (payload?.answer) {
+          content = payload.answer;
+        }
+        if (payload?.sources) {
+          sources = payload.sources;
+        }
+        if (payload?.id) {
+          id = payload.id;
+        }
       }
-    );
-    let content: string = "";
-    let sources = [];
-    let id;
-    if (!resp.ok) {
-      content = "Unfortunately, our service encountered an error. Please try again later."
+      this.answer = {
+        id,
+        content,
+        time: new Date(),
+        sources
+      };
+      return this.answer;
     } else {
-      const payload = await resp.json();
-      if (payload?.answer) {
-        content = payload.answer;
-      }
-      if (payload?.sources) {
-        sources = payload.sources;
-      }
-      if (payload?.id) {
-        id = payload.id;
-      }
+      return 'No local authority was selected.'
     }
-    this.answer = {
-      id,
-      content,
-      time: new Date(),
-      sources
-    };
-    return this.answer;
   }
 
   reset(clearQuestion?: boolean) {
