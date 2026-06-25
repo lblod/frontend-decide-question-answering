@@ -2,29 +2,36 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import Component from '@glimmer/component';
 
+type ExampleQuestionsConfig = Record<string, {
+  name: string;
+  questions: Record<string, string[]>;
+}>;
+
 interface ExampleQuestionsArgs {
   onQuestionClicked: (question: string) => void;
+  localAuthorityUri: string;
 }
 
+
 export default class ExampleQuestions extends Component<ExampleQuestionsArgs> {
-  @tracked selectedQuestion: string = "";
-  exampleQuestions: Record<string, string[]> = {
-    "Ask about subsidies": [
-      "What subsidies are available for renewable energy?",
-      "How can I apply for agricultural subsidies?",
-      "Which industries receive the most government subsidies?"
-    ],
-    "Ask about SDGs": [
-      "What are the 17 Sustainable Development Goals?",
-      "How is progress on the SDGs being measured?",
-      "Which SDGs are most at risk of not being met by 2030?"
-    ],
-    "Ask about climate goals": [
-      "What is the Paris Agreement's 1.5°C target?",
-      "How are national climate goals being tracked?",
-      "What are the EU's climate goals for 2050?"
-    ]
-  };
+  @tracked allExampleQuestions: ExampleQuestionsConfig = {};
+  @tracked private _selectedQuestion: string = '';
+  @tracked private _selectedQuestionUri: string = '';
+
+  constructor(owner: unknown, args: ExampleQuestionsArgs) {
+    super(owner, args);
+    this.clearQuestion();
+    fetch('/data/example-questions.json')
+      .then(r => r.json())
+      .then(data => {
+        this.allExampleQuestions = data;
+      });
+  }
+
+  get exampleQuestions(): Record<string, string[]> {
+    const entry = this.allExampleQuestions[this.args.localAuthorityUri];
+    return entry?.questions ?? {};
+  }
 
   get questions(): string[] {
     return Object.keys(this.exampleQuestions);
@@ -34,12 +41,21 @@ export default class ExampleQuestions extends Component<ExampleQuestionsArgs> {
     return this.exampleQuestions[this.selectedQuestion] ?? [];
   }
 
+  get selectedQuestion(): string {
+    if (this._selectedQuestionUri === this.args.localAuthorityUri) {
+      return this._selectedQuestion;
+    }
+    return '';
+  }
+
   selectQuestion = (question: string) => {
-    this.selectedQuestion = question;
+    this._selectedQuestion = question;
+    this._selectedQuestionUri = this.args.localAuthorityUri;
   }
 
   clearQuestion = () => {
-    this.selectedQuestion = "";
+    this._selectedQuestion = '';
+    this._selectedQuestionUri = '';
   }
 
   @action
