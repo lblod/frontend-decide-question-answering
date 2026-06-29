@@ -55,8 +55,8 @@ export default class QuestionAnsweringService extends Service {
         if (payload?.sources) {
           sources = payload.sources;
         }
-        if (payload?.id) {
-          id = payload.id;
+        if (payload?.answer_id) {
+          id = payload.answer_id;
         }
       }
       this.answer = {

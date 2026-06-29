@@ -33,21 +33,58 @@ export default class AnswerController extends Controller {
     });
   }
 
-  // TODO: these actions should be sent to the backend
-  @action approve() {
-    this.questionAnswering.answer = {
-      ...this.questionAnswering.answer!,
-      rejected: false,
-      approved: !this.questionAnswering.answer?.approved
-    };
+  @action async approve() {
+    let answer = await this.questionAnswering.answer;
+    if (answer?.id) {
+      // always delete the last review first
+      let response = await fetch(
+        `/annotation-review/review/${answer.id}`,
+        {
+          method: 'DELETE',
+        },
+      );
+      // only approve if it wasn't approved already
+      if (!this.questionAnswering.answer?.approved) {
+        response = await fetch(
+          `/annotation-review/review/${answer.id}/approve`,
+          {
+            method: 'POST',
+          },
+        );
+      }
+      this.questionAnswering.answer = {
+        ...this.questionAnswering.answer!,
+        rejected: false,
+        approved: !this.questionAnswering.answer?.approved
+      };
+    }
   }
 
-  @action reject() {
-    this.questionAnswering.answer = {
-      ...this.questionAnswering.answer!,
-      approved: false,
-      rejected: !this.questionAnswering.answer?.rejected
-    };
+  @action async reject() {
+    let answer = await this.questionAnswering.answer;
+    if (answer?.id) {
+      // always delete the last review first
+      let response = await fetch(
+        `/annotation-review/review/${answer.id}`,
+        {
+          method: 'DELETE',
+        },
+      );
+      // only reject if it wasn't rejected already
+      if (!this.questionAnswering.answer?.rejected) {
+        response = await fetch(
+          `/annotation-review/review/${answer.id}/reject`,
+          {
+            method: 'POST',
+          },
+        );
+      }
+      this.questionAnswering.answer = {
+        ...this.questionAnswering.answer!,
+        rejected: !this.questionAnswering.answer?.rejected,
+        approved: false
+      };
+    }
   }
 
   @action approveSource(index: number) {
