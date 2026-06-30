@@ -93,6 +93,9 @@ export default class AnswerController extends Controller {
       let updatedSources = [];
       for (let i = 0; i < sources.length; i++) {
         let source = sources[i];
+        if (!source) {
+          continue;
+        }
         if (i === index) {
           if (source.id) {
             // always delete the last review first
@@ -112,9 +115,9 @@ export default class AnswerController extends Controller {
               );
             }
           }
-          updatedSources.push({ ...sources[i], approved: !source.approved, rejected: false });
+          updatedSources.push({ ...source, approved: !source.approved, rejected: false });
         } else {
-          updatedSources.push(sources[i]);
+          updatedSources.push(source);
         }
       }
       this.questionAnswering.answer = {
@@ -130,6 +133,9 @@ export default class AnswerController extends Controller {
       let updatedSources = [];
       for (let i = 0; i < sources.length; i++) {
         let source = sources[i];
+        if (!source) {
+          continue;
+        }
         if (i === index) {
           if (source.id) {
             // always delete the last review first
@@ -149,9 +155,9 @@ export default class AnswerController extends Controller {
               );
             }
           }
-          updatedSources.push({ ...sources[i], rejected: !source.rejected, approved: false });
+          updatedSources.push({ ...source, rejected: !source.rejected, approved: false });
         } else {
-          updatedSources.push(sources[i]);
+          updatedSources.push(source);
         }
       }
       this.questionAnswering.answer = {

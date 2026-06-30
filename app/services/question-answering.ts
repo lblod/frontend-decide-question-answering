@@ -4,6 +4,7 @@ import { service } from '@ember/service';
 import type LocalAuthorityDataService from 'frontend-decide-question-answering/services/local-authority-data';
 
 export interface Source {
+  id: string;
   uri: string;
   title: string;
   approved?: boolean;

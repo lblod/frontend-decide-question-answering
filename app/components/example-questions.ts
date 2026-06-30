@@ -1,6 +1,7 @@
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import Component from '@glimmer/component';
+import type Owner from '@ember/owner';
 
 type ExampleQuestionsConfig = Record<string, {
   name: string;
@@ -18,7 +19,7 @@ export default class ExampleQuestions extends Component<ExampleQuestionsArgs> {
   @tracked private _selectedQuestion: string = '';
   @tracked private _selectedQuestionUri: string = '';
 
-  constructor(owner: unknown, args: ExampleQuestionsArgs) {
+  constructor(owner: Owner, args: ExampleQuestionsArgs) {
     super(owner, args);
     this.clearQuestion();
     fetch('data/example-questions.json')
