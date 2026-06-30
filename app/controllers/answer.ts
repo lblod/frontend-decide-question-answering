@@ -87,12 +87,36 @@ export default class AnswerController extends Controller {
     }
   }
 
-  @action approveSource(index: number) {
+  @action async approveSource(index: number) {
     const sources = this.questionAnswering.answer?.sources;
     if (sources && sources[index]) {
-      const updatedSources = sources.map(
-        (source, i) => (i === index) ? { ...source, approved: !source.approved, rejected: false } : source
-      );
+      let updatedSources = [];
+      for (let i = 0; i < sources.length; i++) {
+        let source = sources[i];
+        if (i === index) {
+          if (source.id) {
+            // always delete the last review first
+            let response = await fetch(
+              `/annotation-review/review/${source.id}`,
+              {
+                method: 'DELETE',
+              },
+            );
+            // only approve if it wasn't approved already
+            if (!source.approved) {
+              response = await fetch(
+                `/annotation-review/review/${source.id}/approve`,
+                {
+                  method: 'POST',
+                },
+              );
+            }
+          }
+          updatedSources.push({ ...sources[i], approved: !source.approved, rejected: false });
+        } else {
+          updatedSources.push(sources[i]);
+        }
+      }
       this.questionAnswering.answer = {
         ...this.questionAnswering.answer!,
         sources: updatedSources,
@@ -100,12 +124,36 @@ export default class AnswerController extends Controller {
     }
   }
 
-  @action rejectSource(index: number) {
+  @action async rejectSource(index: number) {
     const sources = this.questionAnswering.answer?.sources;
     if (sources && sources[index]) {
-      const updatedSources = sources.map(
-        (source, i) => (i === index) ? { ...source, rejected: !source.rejected, approved: false } : source
-      );
+      let updatedSources = [];
+      for (let i = 0; i < sources.length; i++) {
+        let source = sources[i];
+        if (i === index) {
+          if (source.id) {
+            // always delete the last review first
+            let response = await fetch(
+              `/annotation-review/review/${source.id}`,
+              {
+                method: 'DELETE',
+              },
+            );
+            // only approve if it wasn't approved already
+            if (!source.rejected) {
+              response = await fetch(
+                `/annotation-review/review/${source.id}/reject`,
+                {
+                  method: 'POST',
+                },
+              );
+            }
+          }
+          updatedSources.push({ ...sources[i], rejected: !source.rejected, approved: false });
+        } else {
+          updatedSources.push(sources[i]);
+        }
+      }
       this.questionAnswering.answer = {
         ...this.questionAnswering.answer!,
         sources: updatedSources,
