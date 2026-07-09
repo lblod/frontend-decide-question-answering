@@ -10,6 +10,7 @@ export default class AnswerController extends Controller {
   @service declare questionAnswering: QuestionAnsweringService;
   @service declare router: RouterService;
   @service declare localAuthorityData: LocalAuthorityDataService;
+  @service declare annotationReview: AnnotationReviewService;
 
   queryParams = ['localAuthority'];
 
@@ -36,26 +37,12 @@ export default class AnswerController extends Controller {
   @action async approve() {
     let answer = await this.questionAnswering.answer;
     if (answer?.id) {
-      // always delete the last review first
-      let response = await fetch(
-        `/annotation-review/review/${answer.id}`,
-        {
-          method: 'DELETE',
-        },
-      );
-      // only approve if it wasn't approved already
-      if (!this.questionAnswering.answer?.approved) {
-        response = await fetch(
-          `/annotation-review/review/${answer.id}/approve`,
-          {
-            method: 'POST',
-          },
-        );
-      }
+      const previouslyApproved = this.questionAnswering.answer?.approved;
+      await this.annotationReview.approveAnswer(answer, previouslyApproved);
       this.questionAnswering.answer = {
         ...this.questionAnswering.answer!,
         rejected: false,
-        approved: !this.questionAnswering.answer?.approved
+        approved: !previouslyApproved
       };
     }
   }
@@ -63,25 +50,11 @@ export default class AnswerController extends Controller {
   @action async reject() {
     let answer = await this.questionAnswering.answer;
     if (answer?.id) {
-      // always delete the last review first
-      let response = await fetch(
-        `/annotation-review/review/${answer.id}`,
-        {
-          method: 'DELETE',
-        },
-      );
-      // only reject if it wasn't rejected already
-      if (!this.questionAnswering.answer?.rejected) {
-        response = await fetch(
-          `/annotation-review/review/${answer.id}/reject`,
-          {
-            method: 'POST',
-          },
-        );
-      }
+      const previouslyRejected = this.questionAnswering.answer?.rejected;
+      await this.annotationReview.rejectAnswer(answer, previouslyRejected);
       this.questionAnswering.answer = {
         ...this.questionAnswering.answer!,
-        rejected: !this.questionAnswering.answer?.rejected,
+        rejected: !previouslyRejected,
         approved: false
       };
     }
@@ -98,22 +71,7 @@ export default class AnswerController extends Controller {
         }
         if (i === index) {
           if (source.id) {
-            // always delete the last review first
-            let response = await fetch(
-              `/annotation-review/review/${source.id}`,
-              {
-                method: 'DELETE',
-              },
-            );
-            // only approve if it wasn't approved already
-            if (!source.approved) {
-              response = await fetch(
-                `/annotation-review/review/${source.id}/approve`,
-                {
-                  method: 'POST',
-                },
-              );
-            }
+            await this.annotationReview.approveSource(source);
           }
           updatedSources.push({ ...source, approved: !source.approved, rejected: false });
         } else {
@@ -138,22 +96,7 @@ export default class AnswerController extends Controller {
         }
         if (i === index) {
           if (source.id) {
-            // always delete the last review first
-            let response = await fetch(
-              `/annotation-review/review/${source.id}`,
-              {
-                method: 'DELETE',
-              },
-            );
-            // only approve if it wasn't approved already
-            if (!source.rejected) {
-              response = await fetch(
-                `/annotation-review/review/${source.id}/reject`,
-                {
-                  method: 'POST',
-                },
-              );
-            }
+            await this.annotationReview.rejectSource(source);
           }
           updatedSources.push({ ...source, rejected: !source.rejected, approved: false });
         } else {
