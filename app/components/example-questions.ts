@@ -22,7 +22,7 @@ export default class ExampleQuestions extends Component<ExampleQuestionsArgs> {
   constructor(owner: Owner, args: ExampleQuestionsArgs) {
     super(owner, args);
     this.clearQuestion();
-    fetch('data/example-questions.json')
+    fetch('assets/data/example-questions.json')
       .then(r => r.json())
       .then(data => {
         this.allExampleQuestions = data;
