@@ -3,6 +3,7 @@ import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import QuestionAnsweringService from '../services/question-answering';
+import AnnotationReviewService from '../services/annotation-review';
 import type LocalAuthorityDataService from 'frontend-decide-question-answering/services/local-authority-data';
 import type RouterService from '@ember/routing/router-service';
 

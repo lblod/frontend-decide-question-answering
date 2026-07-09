@@ -1,8 +1,9 @@
 import Service from '@ember/service';
+import type { Source, Answer } from './question-answering';
 
 export default class AnnotationReviewService extends Service {
 
-  async approveAnswer(answer, previouslyApproved) {
+  async approveAnswer(answer: Answer, previouslyApproved: boolean | undefined): Promise<void> {
     // always delete the last review first
     await fetch(
       `/annotation-review/review/${answer.id}`,
@@ -21,7 +22,7 @@ export default class AnnotationReviewService extends Service {
     }
   }
 
-  async rejectAnswer(answer, previouslyRejected) {
+  async rejectAnswer(answer: Answer, previouslyRejected: boolean | undefined): Promise<void> {
     // always delete the last review first
     await fetch(
       `/annotation-review/review/${answer.id}`,
@@ -40,7 +41,7 @@ export default class AnnotationReviewService extends Service {
     }
   }
 
-  async approveSource(source) {
+  async approveSource(source: Source): Promise<void> {
     // always delete the last review first
     await fetch(
       `/annotation-review/review/${source.id}`,
@@ -59,7 +60,7 @@ export default class AnnotationReviewService extends Service {
     }
   }
 
-  async rejectSource(source) {
+  async rejectSource(source: Source): Promise<void> {
     // always delete the last review first
     await fetch(
       `/annotation-review/review/${source.id}`,
