@@ -71,9 +71,7 @@ export default class AnswerController extends Controller {
           continue;
         }
         if (i === index) {
-          if (source.id) {
-            await this.annotationReview.approveSource(source);
-          }
+          await this.annotationReview.approveSource(source);
           updatedSources.push({ ...source, approved: !source.approved, rejected: false });
         } else {
           updatedSources.push(source);
@@ -96,9 +94,7 @@ export default class AnswerController extends Controller {
           continue;
         }
         if (i === index) {
-          if (source.id) {
-            await this.annotationReview.rejectSource(source);
-          }
+          await this.annotationReview.rejectSource(source);
           updatedSources.push({ ...source, rejected: !source.rejected, approved: false });
         } else {
           updatedSources.push(source);

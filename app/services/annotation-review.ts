@@ -42,40 +42,44 @@ export default class AnnotationReviewService extends Service {
   }
 
   async approveSource(source: Source): Promise<void> {
-    // always delete the last review first
-    await fetch(
-      `/annotation-review/review/${source.id}`,
-      {
-        method: 'DELETE',
-      },
-    );
-    // only approve if it wasn't approved already
-    if (!source.approved) {
+    if (source.quotation_id) {
+      // always delete the last review first
       await fetch(
-        `/annotation-review/review/${source.id}/approve`,
+        `/annotation-review/review/${source.quotation_id}`,
         {
-          method: 'POST',
+          method: 'DELETE',
         },
       );
+      // only approve if it wasn't approved already
+      if (!source.approved) {
+        await fetch(
+          `/annotation-review/review/${source.quotation_id}/approve`,
+          {
+            method: 'POST',
+          },
+        );
+      }
     }
   }
 
   async rejectSource(source: Source): Promise<void> {
-    // always delete the last review first
-    await fetch(
-      `/annotation-review/review/${source.id}`,
-      {
-        method: 'DELETE',
-      },
-    );
-    // only approve if it wasn't approved already
-    if (!source.rejected) {
+    if (source.quotation_id) {
+      // always delete the last review first
       await fetch(
-        `/annotation-review/review/${source.id}/reject`,
+        `/annotation-review/review/${source.quotation_id}`,
         {
-          method: 'POST',
+          method: 'DELETE',
         },
       );
+      // only approve if it wasn't approved already
+      if (!source.rejected) {
+        await fetch(
+          `/annotation-review/review/${source.quotation_id}/reject`,
+          {
+            method: 'POST',
+          },
+        );
+      }
     }
   }
 }

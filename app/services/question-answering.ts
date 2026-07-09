@@ -5,6 +5,7 @@ import type LocalAuthorityDataService from 'frontend-decide-question-answering/s
 
 export interface Source {
   id: string;
+  quotation_id?: string;
   uri: string;
   title: string;
   approved?: boolean;
