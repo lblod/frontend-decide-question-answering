@@ -6,7 +6,7 @@
     </div>
     <AuButtonGroup class="au-u-flex--column">
       {{#each this.currentExampleQuestions as |exampleQuestion|}}
-        <AuButton @skin="secondary" @width="block" {{on "click" (fn this.questionClicked exampleQuestion)}}>{{exampleQuestion}}</AuButton>
+        <AuButton class="au-u-word-break" @wrap="true" @skin="secondary" @width="block" {{on "click" (fn this.questionClicked exampleQuestion)}}>{{exampleQuestion}}</AuButton>
       {{/each}}
     </AuButtonGroup>
   </div>
@@ -14,7 +14,7 @@
 <AuToolbar @border="top" @size="small" class="au-u-text-center au-u-margin-top-small">
    <AuButtonGroup class="au-u-text-center" style="margin: auto">
      {{#each this.questions as |question|}}
-       <AuButton @skin="secondary" {{on "click" (fn this.selectQuestion question)}}>
+       <AuButton @skin="secondary" @wrap="true" class="au-u-word-break" {{on "click" (fn this.selectQuestion question)}}>
          {{question}}
        </AuButton>
      {{/each}}
