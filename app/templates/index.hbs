@@ -47,7 +47,12 @@
         >
           Send
         </AuButton>
-        <ExampleQuestions @onQuestionClicked={{this.sendQuestion}} />
+        {{#if this.localAuthorityData.selectedLocalAuthority}}
+          <ExampleQuestions
+            @localAuthorityUri={{this.localAuthorityData.selectedLocalAuthority.uri}}
+            @onQuestionClicked={{this.sendQuestion}}
+          />
+        {{/if}}
       </div>
       <p class="au-u-text-center au-u-margin-bottom">
         <AuLink @route="gdpr">&#9432; Find out more about the project and how we collect your data</AuLink>

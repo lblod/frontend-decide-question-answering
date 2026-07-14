@@ -28,18 +28,18 @@
                 <Item class="au-u-flex au-u-1-1">
                   <AuLinkExternal
                     class="au-u-flex-grow"
-                    href={{source.uri}}
+                    href={{source.download_url}}
                     @icon="link-external"
                     @iconAlignment="right"
                   >
                     {{source.title}}
                   </AuLinkExternal>
-                  <div class="au-u-flex">
+                  <div class="au-u-flex au-u-flex-shrink-0 au-u-flex-grow-0">
                     <AuButtonGroup>
-                      <AuButton @skin="naked" {{on "click" (fn this.approveSource index)}}>
+                      <AuButton class="au-u-padding-right-none" @skin="naked" {{on "click" (fn this.approveSource index)}}>
                         <VoteThumbsUpIcon @fill={{if source.approved "#0055CC"}} />
                       </AuButton>
-                      <AuButton @skin="naked" {{on "click" (fn this.rejectSource index)}}>
+                      <AuButton class="au-u-padding-left-none" @skin="naked" {{on "click" (fn this.rejectSource index)}}>
                         <VoteThumbsDownIcon @fill={{if source.rejected "#0055CC"}} />
                       </AuButton>
                     </AuButtonGroup>

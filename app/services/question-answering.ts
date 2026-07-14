@@ -4,6 +4,8 @@ import { service } from '@ember/service';
 import type LocalAuthorityDataService from 'frontend-decide-question-answering/services/local-authority-data';
 
 export interface Source {
+  id: string;
+  quotation_id?: string;
   uri: string;
   title: string;
   approved?: boolean;
@@ -55,8 +57,8 @@ export default class QuestionAnsweringService extends Service {
         if (payload?.sources) {
           sources = payload.sources;
         }
-        if (payload?.id) {
-          id = payload.id;
+        if (payload?.answer_id) {
+          id = payload.answer_id;
         }
       }
       this.answer = {

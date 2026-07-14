@@ -2,3 +2,7 @@ $au-flex-utilities-responsive: true;
 @import "@appuniversum/ember-appuniversum/styles";
 @import "_shame";
 @import "ember-power-select";
+
+.au-c-icon--link-external {
+  flex-shrink: 0 !important;
+}

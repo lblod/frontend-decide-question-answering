@@ -1,0 +1,38 @@
+{
+  "https://ris.freiburg.de/oparl/body/FR": {
+    "name": "Freiburg",
+    "questions": {
+      "Example questions": [
+        "Liste / zeige mir Drucksachen auf, in welchen über einen Grundstückstausch beschlossen wurde.",
+        "Hat der Bau-Umlegungs- und Stadtentwicklungsausschuss in der Vergangenheit Offenlagebeschlüsse von Bebauungsplänen beschlossen oder hat dies in der Vergangenheit ausschließlich der Gemeinderat beschlossen?",
+        "Zeige mir den aktuellsten Beschluss zur Stadtbahn"
+      ]
+    }
+  },
+  "https://decide.smartcitybamberg.de/organizations#c8e6b8ef-0a33-425a-b9d5-96354823f6e7": {
+    "name": "Bamberg",
+    "questions": {
+      "Strategic Planning & Urban Development": [
+        "Welche Sanierungsgebiete in Bamberg haben die höchste Priorität für Fortschreibung?",
+        "Reichen die Schulplätze an den Bamberger Gymnasien für die nächsten Jahre?",
+        "Wie entwickeln sich die Grundschulzahlen im Bamberger Osten und welche baulichen Maßnahmen sind geplant?"
+      ],
+      "Monitoring, Statistics & Reporting": [
+        "Wie hoch ist die Quote der Grundsicherungsempfänger im Alter in Bamberg im Vergleich zu Bayern?"
+      ],
+      "Citizen Inquiries & Public Relations": [
+        "Gibt es in Bamberg Abstellmöglichkeiten für Lastenräder?"
+      ]
+    }
+  },
+  "http://data.lblod.info/id/bestuurseenheden/353234a365664e581db5c2f7cc07add2534b47b8e1ab87c821fc6e6365e6bef5": {
+    "name": "Gent",
+    "questions": {
+      "Example questions": [
+        "Toon me beslissingen over omgevingsvergunningen en omgevingsmeldingen",
+        "Toon me beslissingen over belastingen en retributies",
+        "Waar moet ik rekening mee houden als ik een halloweentocht wil organiseren?"
+      ]
+    }
+  }
+}
