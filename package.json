@@ -1,6 +1,6 @@
 {
   "name": "frontend-decide-question-answering",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "private": true,
   "description": "The Smart Search is a small application that communicates with the RAG/LLM backend of the DECIDe project.",
   "repository": "",
