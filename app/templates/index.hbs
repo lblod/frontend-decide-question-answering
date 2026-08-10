@@ -1,8 +1,6 @@
 {{page-title "DECIDe | Smart Search"}}
 <AuBodyContainer>
-  <section
-    class="au-u-flex au-u-flex--center au-u-height-full "
-  >
+  <section class="au-u-flex au-u-flex--center au-u-height-full">
     <article
       class="au-u-1-1 au-u-flex au-u-flex--column au-u-flex--vertical-center"
       style="overflow-y: scroll"
@@ -12,13 +10,25 @@
         style="overflow-y: visible"
       >
         <div class="au-u-text-center">
-          <img style="max-height: 15rem" src="/assets/images/DECIDe-logo.png" alt="DECIDe Smart Search" />
+          <img
+            style="max-height: 15rem"
+            src="/assets/images/DECIDe-logo.png"
+            alt="DECIDe Smart Search"
+          />
         </div>
-        <AuHeading class="au-u-text-center" @level="1" @skin="1">DECIDe Smart Search</AuHeading>
+        <AuHeading class="au-u-text-center" @level="1" @skin="1">DECIDe Smart
+          Search</AuHeading>
 
-        <AuHeading class="au-u-text-center" @level="2" @skin="4">Need help understanding local decisions? This Smart Search is here to answer questions about decisions made by your Local Authority.</AuHeading>
+        <AuHeading class="au-u-text-center" @level="2" @skin="4">Need help
+          understanding local decisions? This Smart Search is here to answer
+          questions about decisions made by your Local Authority.</AuHeading>
 
-        <AuHeading class="au-u-regular au-u-text-center" @level="3" @skin="5">Asking a question in the language of the decision will sometimes give you a better answer.</AuHeading>
+        <AuHeading
+          class="au-u-regular au-u-text-center"
+          @level="3"
+          @skin="5"
+        >Asking a question in the language of the decision will sometimes give
+          you a better answer.</AuHeading>
         <div class="au-o-flow au-o-flow--small">
           <AuHeading @level="2" @skin="4">Choose a local authority</AuHeading>
           <SelectLocalAuthority
@@ -33,19 +43,34 @@
             id="question-text-area"
             @width="block"
             style="height: 10rem"
+            aria-describedby="question-privacy-disclaimer"
             value={{this.questionAnswering.currentQuestion}}
             {{on "input" this.setQuestion}}
           />
+          <AuHelpText id="question-privacy-disclaimer" @skin="secondary">
+            Your question is stored to improve this service. Please don't enter
+            personal data such as names, addresses or case numbers, about
+            yourself or anyone else.
+            <AuLink @route="gdpr">Read more about how we handle your data</AuLink>
+          </AuHelpText>
         </div>
 
         <AuButton
-          @disabled={{not (and this.questionAnswering.currentQuestion this.localAuthorityData.selectedLocalAuthority)}}
+          @disabled={{not
+            (and
+              this.questionAnswering.currentQuestion
+              this.localAuthorityData.selectedLocalAuthority
+            )
+          }}
           @loading={{this.loading}}
           @loadingMessage="Laden..."
           @width="block"
           @icon="arrow-right"
           @iconAlignment="right"
-          {{on "click" (fn this.sendQuestion this.questionAnswering.currentQuestion)}}
+          {{on
+            "click"
+            (fn this.sendQuestion this.questionAnswering.currentQuestion)
+          }}
         >
           Send
         </AuButton>
@@ -57,7 +82,8 @@
         {{/if}}
       </div>
       <p class="au-u-text-center au-u-margin-bottom">
-        <AuLink @route="gdpr">&#9432; Find out more about the project and how we collect your data</AuLink>
+        <AuLink @route="gdpr">&#9432; Find out more about the project and how we
+          collect your data</AuLink>
       </p>
     </article>
   </section>
